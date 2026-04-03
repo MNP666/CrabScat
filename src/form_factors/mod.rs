@@ -1,6 +1,8 @@
+mod gauss_chain;
 mod cylinder;
 mod sphere;
 
+pub use gauss_chain::GaussChain;
 pub use cylinder::Cylinder;
 pub use sphere::Sphere;
 
