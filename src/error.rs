@@ -11,6 +11,15 @@ pub enum CrabScatError {
         found: usize,
         field: &'static str,
     },
+    InvalidIntegrationInterval {
+        a: f64,
+        b: f64,
+        reason: &'static str,
+    },
+    InvalidIntegrationSteps {
+        n: usize,
+        reason: &'static str,
+    },
     InvalidParameter {
         name: &'static str,
         value: f64,
@@ -23,6 +32,10 @@ pub enum CrabScatError {
     ParseError {
         line: usize,
         message: String,
+    },
+    NonFiniteIntegrand {
+        x: f64,
+        value: f64,
     },
     NotEnoughData {
         points: usize,
@@ -45,6 +58,12 @@ impl fmt::Display for CrabScatError {
                     "length mismatch for {field}: expected {expected} values, found {found}"
                 )
             }
+            Self::InvalidIntegrationInterval { a, b, reason } => {
+                write!(f, "invalid integration interval [{a}, {b}]: {reason}")
+            }
+            Self::InvalidIntegrationSteps { n, reason } => {
+                write!(f, "invalid integration step count {n}: {reason}")
+            }
             Self::InvalidParameter {
                 name,
                 value,
@@ -56,6 +75,9 @@ impl fmt::Display for CrabScatError {
             ),
             Self::ParseError { line, message } => {
                 write!(f, "failed to parse data at line {line}: {message}")
+            }
+            Self::NonFiniteIntegrand { x, value } => {
+                write!(f, "integrand returned non-finite value {value} at x = {x}")
             }
             Self::NotEnoughData { points, parameters } => write!(
                 f,
