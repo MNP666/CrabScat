@@ -48,11 +48,11 @@ where
         self.background
     }
 
-    pub fn intensity_at(&self, q: f64) -> f64 {
-        self.scale * self.form_factor.intensity_at(q) + self.background
+    pub fn intensity_at(&self, q: f64) -> Result<f64> {
+        Ok(self.scale * self.form_factor.intensity_at(q)? + self.background)
     }
 
-    pub fn evaluate(&self, q: &[f64]) -> Vec<f64> {
+    pub fn evaluate(&self, q: &[f64]) -> Result<Vec<f64>> {
         q.iter().map(|&value| self.intensity_at(value)).collect()
     }
 }

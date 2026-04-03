@@ -5,7 +5,7 @@ fn main() -> Result<()> {
 
     let reference_model = SingleParticleModel::new(Sphere::new(35.0)?, 120.0, 0.02)?;
     let observed_intensity = reference_model
-        .evaluate(&q)
+        .evaluate(&q)?
         .into_iter()
         .enumerate()
         .map(|(index, value)| {
@@ -17,7 +17,7 @@ fn main() -> Result<()> {
     let observed = Profile::new(q.clone(), observed_intensity, Some(vec![0.05; q.len()]))?;
 
     let trial_model = SingleParticleModel::new(Sphere::new(32.0)?, 120.0, 0.02)?;
-    let predicted = trial_model.evaluate(&q);
+    let predicted = trial_model.evaluate(&q)?;
     let quality = evaluate_fit(&observed, &predicted, 3)?;
 
     println!("trial radius: {} A", trial_model.form_factor().radius());

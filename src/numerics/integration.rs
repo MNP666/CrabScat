@@ -24,7 +24,19 @@ where
     // focus on the Simpson accumulation logic.
     let _ = (fa, fb, h);
 
-    todo!("implement composite Simpson integration")
+    // todo!("implement composite Simpson integration")
+
+    let middle_sum: Result<f64> = (1..n)
+        .map(|i| {
+            let x = a + i as f64 * h;
+            let weight = if i % 2 == 0 { 2.0 } else { 4.0 };
+            let fx = evaluate_integrand(&f, x)?;
+            Ok(weight * fx)
+        })
+        .sum();
+
+    let final_sum = fa + fb + middle_sum?;
+    Ok(h / 3.0 * final_sum)
 }
 
 fn validate_interval(a: f64, b: f64) -> Result<()> {

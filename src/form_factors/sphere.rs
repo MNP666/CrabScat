@@ -37,8 +37,8 @@ impl Sphere {
 }
 
 impl FormFactor for Sphere {
-    fn intensity_at(&self, q: f64) -> f64 {
+    fn intensity_at(&self, q: f64) -> Result<f64> {
         let amplitude = self.amplitude_at(q);
-        amplitude * amplitude
+        Ok(amplitude * amplitude)
     }
 }

@@ -26,9 +26,17 @@ impl GaussChain {
 }
 
 impl FormFactor for GaussChain {
-    fn intensity_at(&self, q: f64) -> f64 {
+    fn intensity_at(&self, q: f64) -> Result<f64> {
         let u = q * q * self.rg * self.rg;
-        let p = 2.0 * ((-u).exp() - 1.0 + u) / (u * u);
-        p
+
+        if u == 0.0 {
+            return Ok(1.0);
+        }
+
+        if u < 1.0e-3 {
+            return Ok(1.0 - u / 3.0 + u * u / 12.0 - u * u * u / 60.0);
+        }
+
+        Ok(2.0 * ((-u).exp() - 1.0 + u) / (u * u))
     }
 }

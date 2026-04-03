@@ -4,7 +4,7 @@ use crabscat::{Profile, Result, SingleParticleModel, Sphere, chi_squared, evalua
 #[test]
 fn sphere_is_normalized_at_zero_q() -> Result<()> {
     let sphere = Sphere::new(25.0)?;
-    let intensity = sphere.intensity_at(0.0);
+    let intensity = sphere.intensity_at(0.0)?;
 
     assert!((intensity - 1.0).abs() < 1.0e-12);
     Ok(())
@@ -14,7 +14,7 @@ fn sphere_is_normalized_at_zero_q() -> Result<()> {
 fn identical_model_has_zero_chi_squared() -> Result<()> {
     let q = vec![0.01, 0.02, 0.03, 0.04];
     let model = SingleParticleModel::new(Sphere::new(18.0)?, 10.0, 0.1)?;
-    let predicted = model.evaluate(&q);
+    let predicted = model.evaluate(&q)?;
     let profile = Profile::new(q, predicted.clone(), Some(vec![0.1; predicted.len()]))?;
 
     let chi2 = chi_squared(&profile, &predicted)?;
