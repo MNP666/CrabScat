@@ -1,4 +1,4 @@
-use crabscat::{Profile, Result, SingleParticleModel, Sphere, FitOptions, grid_search};
+use crabscat::{FitOptions, Profile, Result, SingleParticleModel, Sphere, grid_search, write_fit_result};
 
 fn main() -> Result<()> {
     let q: Vec<f64> = (1..=60).map(|index| index as f64 * 0.005).collect();
@@ -17,7 +17,7 @@ fn main() -> Result<()> {
     let observed = Profile::new(q.clone(), observed_intensity, Some(vec![0.05; q.len()]))?;
 
     // implement grid search
-    let opts  = FitOptions {
+    let opts = FitOptions {
         start: 10.0,
         stop: 50.0,
         num_points: 200,
@@ -25,7 +25,7 @@ fn main() -> Result<()> {
 
     let best_fit = grid_search(&opts, &observed, |radius| {
         let model = SingleParticleModel::new(Sphere::new(radius)?, 120.0, 0.02)?;
-        model.evaluate(observed.q()) 
+        model.evaluate(observed.q())
     })?;
 
     // todo!();
@@ -35,7 +35,13 @@ fn main() -> Result<()> {
 
     println!("Best fit radius: {} A", best_fit.best_value);
     println!("chi^2 = {:.4}", best_fit.best_quality.chi_squared);
-    println!("reduced chi^2 = {:.4}", best_fit.best_quality.reduced_chi_squared);
+    println!(
+        "reduced chi^2 = {:.4}",
+        best_fit.best_quality.reduced_chi_squared
+    );
+
+    std::fs::create_dir_all("output");
+    write_fit_result("output/grid_fit.dat", &observed, &best_fit)?;
 
     Ok(())
 }

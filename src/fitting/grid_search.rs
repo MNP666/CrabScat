@@ -8,6 +8,12 @@ pub struct GridSearchResult {
     pub best_predicted: Vec<f64>,
 }
 
+impl GridSearchResult {
+    pub fn best_predicted(&self) -> &[f64] {
+        &self.best_predicted
+    }
+}
+
 pub struct FitOptions {
     pub start: f64,
     pub stop: f64,
