@@ -1,9 +1,16 @@
-use crabscat::{Profile, Result, SingleParticleModel, Sphere, evaluate_fit, models::{Distribution, PolySphere}};
+use crabscat::{
+    Profile, Result, SingleParticleModel, Sphere, evaluate_fit,
+    models::{Distribution, PolySphere},
+};
 
 fn main() -> Result<()> {
     let q: Vec<f64> = (1..=60).map(|index| index as f64 * 0.005).collect();
 
-    let dist = Distribution::Gaussian { mean: 30.0, std: 3.0, num_points: 12 };
+    let dist = Distribution::Gaussian {
+        mean: 30.0,
+        std: 3.0,
+        num_points: 12,
+    };
     let reference_model = PolySphere::new(dist, 120.0, 0.02)?;
     let observed_intensity = reference_model.evaluate(&q)?;
 

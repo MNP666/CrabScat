@@ -42,6 +42,9 @@ pub enum CrabScatError {
         parameters: usize,
     },
     Io(std::io::Error),
+    NoOptimum {
+        reason: &'static str,
+    },
 }
 
 impl fmt::Display for CrabScatError {
@@ -83,6 +86,7 @@ impl fmt::Display for CrabScatError {
                 f,
                 "not enough data points for reduced chi-squared: {points} points, {parameters} parameters"
             ),
+            Self::NoOptimum { reason } => write!(f, "no optimum found: {reason}"),
             Self::Io(error) => write!(f, "{error}"),
         }
     }

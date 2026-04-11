@@ -8,7 +8,7 @@ pub mod numerics;
 
 pub use data::Profile;
 pub use error::{CrabScatError, Result};
-pub use fitting::{FitQuality, chi_squared, evaluate_fit};
+pub use fitting::{FitQuality, chi_squared, evaluate_fit, FitOptions, grid_search};
 pub use form_factors::{Cylinder, Sphere};
-pub use models::SingleParticleModel;
+pub use models::{PolySphere, SingleParticleModel};
 pub use numerics::{DEFAULT_INTEGRATION_STEPS, integrate_1d, simpson};
