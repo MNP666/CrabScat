@@ -3,12 +3,28 @@ use crate::error::Result;
 use crate::{FitQuality, Profile, evaluate_fit};
 
 pub struct GridSearchResult {
-    pub best_value: f64,
-    pub best_quality: FitQuality,
-    pub best_predicted: Vec<f64>,
+    best_value: f64,
+    best_quality: FitQuality,
+    best_predicted: Vec<f64>,
 }
 
 impl GridSearchResult {
+    pub fn new(best_value: f64, best_quality: FitQuality, best_predicted: Vec<f64>) -> Self {
+        Self {
+            best_value,
+            best_quality,
+            best_predicted,
+        }
+    }
+
+    pub fn best_value(&self) -> f64 {
+        self.best_value
+    }
+
+    pub fn best_quality(&self) -> FitQuality {
+        self.best_quality
+    }
+
     pub fn best_predicted(&self) -> &[f64] {
         &self.best_predicted
     }
@@ -52,11 +68,7 @@ where
         };
 
         if is_better {
-            best_result = Some(GridSearchResult {
-                best_value: val,
-                best_quality: tmp_result,
-                best_predicted: predicted,
-            });
+            best_result = Some(GridSearchResult::new(val, tmp_result, predicted));
         }
     }
 

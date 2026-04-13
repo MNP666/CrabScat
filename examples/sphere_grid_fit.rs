@@ -1,4 +1,6 @@
-use crabscat::{FitOptions, Profile, Result, SingleParticleModel, Sphere, grid_search, write_fit_result};
+use crabscat::{
+    FitOptions, Profile, Result, SingleParticleModel, Sphere, grid_search, write_fit_result,
+};
 
 fn main() -> Result<()> {
     let q: Vec<f64> = (1..=60).map(|index| index as f64 * 0.005).collect();
@@ -33,14 +35,14 @@ fn main() -> Result<()> {
     // let predicted = trial_model.evaluate(&q)?;
     // let quality = evaluate_fit(&observed, &predicted, 3)?;
 
-    println!("Best fit radius: {} A", best_fit.best_value);
-    println!("chi^2 = {:.4}", best_fit.best_quality.chi_squared);
+    println!("Best fit radius: {} A", best_fit.best_value());
+    println!("chi^2 = {:.4}", best_fit.best_quality().chi_squared);
     println!(
         "reduced chi^2 = {:.4}",
-        best_fit.best_quality.reduced_chi_squared
+        best_fit.best_quality().reduced_chi_squared
     );
 
-    std::fs::create_dir_all("output");
+    let _ = std::fs::create_dir_all("output")?;
     write_fit_result("output/grid_fit.dat", &observed, &best_fit)?;
 
     Ok(())

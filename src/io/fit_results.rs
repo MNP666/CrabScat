@@ -10,7 +10,7 @@ pub fn write_fit_result(
     data: &Profile,
     fit: &GridSearchResult,
 ) -> Result<()> {
-    let header = "# q\tIq_obs\tIq_fit\tsigma\tresiduals";
+    let header = "q\tIq_obs\tIq_fit\tsigma\tresiduals";
 
     let q = data.q();
     let observed = data.intensity();
@@ -39,7 +39,11 @@ pub fn write_fit_result(
         writeln!(
             writer,
             "{:.8e}\t{:.8e}\t{:.8e}\t{:.8e}\t{:.8e}",
-            q[i], observed[i], predicted[i], sigma_value, observed[i]-predicted[i]
+            q[i],
+            observed[i],
+            predicted[i],
+            sigma_value,
+            observed[i] - predicted[i]
         )?;
     }
 

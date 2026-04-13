@@ -1,7 +1,9 @@
+mod core_shell;
 mod cylinder;
 mod gauss_chain;
 mod sphere;
 
+pub use core_shell::CoreShell;
 pub use cylinder::Cylinder;
 pub use gauss_chain::GaussChain;
 pub use sphere::Sphere;
