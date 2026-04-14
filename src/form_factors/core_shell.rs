@@ -9,7 +9,7 @@ pub struct CoreShell {
     shell_contrast: f64,
     core_radius: f64,
     shell_thickness: f64,
-    normalization: f64
+    normalization: f64,
 }
 
 impl CoreShell {
@@ -35,9 +35,9 @@ impl CoreShell {
             });
         }
 
-        let fzero: f64 = (core_contrast - shell_contrast) * 4.0/3.0*PI*core_radius.powi(3)
-                        + shell_contrast * 4.0/3.0*PI*(core_radius+shell_thickness).powi(3);
-        
+        let fzero: f64 = (core_contrast - shell_contrast) * 4.0 / 3.0 * PI * core_radius.powi(3)
+            + shell_contrast * 4.0 / 3.0 * PI * (core_radius + shell_thickness).powi(3);
+
         if !fzero.is_finite() || fzero.abs() < 1e-12 {
             return Err(CrabScatError::InvalidParameter {
                 name: "shell_contrast",
@@ -54,7 +54,7 @@ impl CoreShell {
             shell_contrast,
             core_radius,
             shell_thickness,
-            normalization: fzero
+            normalization: fzero,
         })
     }
 
@@ -73,7 +73,7 @@ impl CoreShell {
 
     fn sph_kernel(qr: f64) -> f64 {
         if qr < 1.0e-12 {
-            return 1.0
+            return 1.0;
         }
         let numerator = qr.sin() - qr * qr.cos();
         3.0 * numerator / qr.powi(3)
@@ -82,8 +82,6 @@ impl CoreShell {
     pub fn amplitude_at(&self, q: f64) -> f64 {
         let qr_inner = q * self.core_radius;
         let qr_outer = q * self.outer_radius();
-
-
 
         let inner_amp = CoreShell::sph_kernel(qr_inner);
         let outer_amp = CoreShell::sph_kernel(qr_outer);

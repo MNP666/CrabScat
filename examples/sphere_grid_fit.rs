@@ -19,11 +19,7 @@ fn main() -> Result<()> {
     let observed = Profile::new(q.clone(), observed_intensity, Some(vec![0.05; q.len()]))?;
 
     // implement grid search
-    let opts = FitOptions {
-        start: 10.0,
-        stop: 50.0,
-        num_points: 200,
-    };
+    let opts = FitOptions::new(10.0, 50.0, 200)?;
 
     let best_fit = grid_search(&opts, &observed, |radius| {
         let model = SingleParticleModel::new(Sphere::new(radius)?, 120.0, 0.02)?;
