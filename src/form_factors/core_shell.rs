@@ -72,7 +72,7 @@ impl CoreShell {
     }
 
     fn sph_kernel(qr: f64) -> f64 {
-        if qr < 1.0e-12 {
+        if qr.abs() < 1.0e-12 {
             return 1.0;
         }
         let numerator = qr.sin() - qr * qr.cos();
