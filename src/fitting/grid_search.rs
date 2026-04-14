@@ -125,7 +125,6 @@ pub struct CoarseFineSearch {
 
 impl CoarseFineSearch {
     pub fn new(initial: FitOptions, levels: usize, shrink_factor: f64) -> Result<Self> {
-        // does not consume FitOptions
         if levels == 0 {
             return Err(CrabScatError::InvalidParameter {
                 name: "levels",
