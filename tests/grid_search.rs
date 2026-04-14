@@ -1,4 +1,4 @@
-¬use crabscat::{FitOptions, Profile, Result, SingleParticleModel, Sphere, grid_search};
+use crabscat::{FitOptions, Profile, Result, SingleParticleModel, Sphere, grid_search};
 
 #[test]
 fn grid_search_recovers_known_sphere_radius() -> Result<()> {
