@@ -1,5 +1,5 @@
 use crabscat::{
-    CoarseFineSearch, FitOptions, Profile, Result, SingleParticleModel, form_factors::CoreShell,
+    CoarseToFineSearch, FitOptions, Profile, Result, SingleParticleModel, form_factors::CoreShell,
     write_fit_result,
 };
 
@@ -20,9 +20,9 @@ fn main() -> Result<()> {
 
     let input = FitOptions::new(5.0, 50.0, 10)?;
 
-    let search = CoarseFineSearch::new(input, 4, 2.0)?;
+    let search = CoarseToFineSearch::new(input, 4, 2.0)?;
 
-    let best_fit = search.fit(&target, |core_value| {
+    let best_fit = search.fit(&target, 1, |core_value| {
         let ff2 = CoreShell::new(1.0, 4.0, core_value, 3.0)?;
         let fit_profile = SingleParticleModel::new(ff2, 100.0, 0.5)?;
         fit_profile.evaluate(target.q())

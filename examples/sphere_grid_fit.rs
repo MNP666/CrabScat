@@ -21,7 +21,7 @@ fn main() -> Result<()> {
     // implement grid search
     let opts = FitOptions::new(10.0, 50.0, 200)?;
 
-    let best_fit = grid_search(&opts, &observed, |radius| {
+    let best_fit = grid_search(&opts, &observed, 1, |radius| {
         let model = SingleParticleModel::new(Sphere::new(radius)?, 120.0, 0.02)?;
         model.evaluate(observed.q())
     })?;

@@ -9,7 +9,7 @@ pub mod numerics;
 pub use data::Profile;
 pub use error::{CrabScatError, Result};
 pub use fitting::{
-    CoarseFineSearch, FitOptions, FitQuality, chi_squared, evaluate_fit, grid_search,
+    CoarseToFineSearch, FitOptions, FitQuality, chi_squared, evaluate_fit, grid_search,
 };
 pub use form_factors::{Cylinder, Sphere};
 pub use io::write_fit_result;
