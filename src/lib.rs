@@ -13,7 +13,7 @@ pub use fitting::{
     CoarseToFineSearch, FitOptions, FitQuality, chi_squared, evaluate_fit, grid_search,
 };
 pub use form_factors::{Cylinder, Sphere};
+pub use io::{write_fit_result, write_gp_result};
+pub use models::{InteractingParticleModel, PolySphere, SingleParticleModel};
+pub use numerics::{DEFAULT_INTEGRATION_STEPS, covar, integrate_1d, simpson};
 pub use structure_factors::Lorentzian;
-pub use io::write_fit_result;
-pub use models::{PolySphere, SingleParticleModel, InteractingParticleModel};
-pub use numerics::{DEFAULT_INTEGRATION_STEPS, integrate_1d, simpson};

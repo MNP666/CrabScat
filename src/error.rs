@@ -45,6 +45,7 @@ pub enum CrabScatError {
     NoOptimum {
         reason: &'static str,
     },
+    LinearAlgebra(linfa_linalg::LinalgError),
 }
 
 impl fmt::Display for CrabScatError {
@@ -88,6 +89,7 @@ impl fmt::Display for CrabScatError {
             ),
             Self::NoOptimum { reason } => write!(f, "no optimum found: {reason}"),
             Self::Io(error) => write!(f, "{error}"),
+            Self::LinearAlgebra(error) => write!(f, "Linear Algebra error: {error}"),
         }
     }
 }
@@ -96,6 +98,7 @@ impl Error for CrabScatError {
     fn source(&self) -> Option<&(dyn Error + 'static)> {
         match self {
             Self::Io(error) => Some(error),
+            Self::LinearAlgebra(error) => Some(error),
             _ => None,
         }
     }
@@ -104,5 +107,11 @@ impl Error for CrabScatError {
 impl From<std::io::Error> for CrabScatError {
     fn from(value: std::io::Error) -> Self {
         Self::Io(value)
+    }
+}
+
+impl From<linfa_linalg::LinalgError> for CrabScatError {
+    fn from(value: linfa_linalg::LinalgError) -> Self {
+        Self::LinearAlgebra(value)
     }
 }

@@ -1,6 +1,6 @@
 use crabscat::{
-    FitOptions, Profile, Result, Sphere, grid_search, InteractingParticleModel,
-    Lorentzian, write_fit_result,
+    FitOptions, InteractingParticleModel, Lorentzian, Profile, Result, Sphere, grid_search,
+    write_fit_result,
 };
 
 fn main() -> Result<()> {

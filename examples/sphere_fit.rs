@@ -9,7 +9,7 @@ fn main() -> Result<()> {
         .into_iter()
         .enumerate()
         .map(|(index, value)| {
-            let offset = 1.0 + 0.01 * ((index % 5) as f64 - 2.0);
+
             value * offset
         })
         .collect();

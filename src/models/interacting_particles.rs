@@ -1,5 +1,3 @@
-use std::clone;
-
 use crate::error::{CrabScatError, Result};
 use crate::form_factors::FormFactor;
 use crate::structure_factors::StructureFactor;

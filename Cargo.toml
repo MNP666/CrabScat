@@ -5,6 +5,10 @@ edition = "2024"
 
 [dependencies]
 libm = "0.2"
+linfa-linalg = "0.2.1"
+ndarray = "0.16.1"
 
 [dev-dependencies]
+rand = "0.10.1"
+rand_distr = "0.6.0"
 tempfile = "3.27.0"
