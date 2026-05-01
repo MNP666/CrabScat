@@ -8,10 +8,7 @@ fn main() -> Result<()> {
         .evaluate(&q)?
         .into_iter()
         .enumerate()
-        .map(|(index, value)| {
-
-            value * offset
-        })
+        .map(|(index, value)| value * offset)
         .collect();
 
     let observed = Profile::new(q.clone(), observed_intensity, Some(vec![0.05; q.len()]))?;

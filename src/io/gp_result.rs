@@ -1,5 +1,6 @@
+use crate::{RbfGPResult, RbfGaussianProcess};
 use crate::error::Result;
-use ndarray::Array2;
+// use ndarray::Array2;
 use std::fs::File;
 use std::io::{BufWriter, Write};
 use std::path::Path;
@@ -7,37 +8,55 @@ use std::path::Path;
 pub fn write_gp_result(
     path: impl AsRef<Path>,
     x_train: &[f64],
-    x_pred: &[f64],
-    data: &Array2<f64>,
-    fit: &Array2<f64>,
-    stdev: &[f64],
+    y_train: &[f64],
+    process: &RbfGaussianProcess,
+    prediction: &RbfGPResult,
 ) -> Result<()> {
-    let header = "x_train\ty_train\tx_pred\ty_pred\tsigma";
+    // let header = "x_train\ty_train\tx_pred\ty_pred\tupper\tlower";
+    let header = "Kind\tX\tY\tSTD\tUpper\tLower\tLength_scale\tAmplitude\tNoise";
 
     let file = File::create(path)?;
     let mut writer = BufWriter::new(file);
 
     writeln!(writer, "{header}")?;
-
-    let mut x_pred_val = f64::NAN;
-    let mut y_pred_val = f64::NAN;
-    let mut stdev_pred_val = f64::NAN;
+     // let mut x_pred_val = f64::NAN;´
+    // let mut y_pred_val = f64::NAN;
+    // let mut upper_val = f64::NAN;
+    // let mut lower_val = f64::NAN;
 
     for i in 0..x_train.len() {
-        if i < x_pred.len() {
-            x_pred_val = x_pred[i];
-            y_pred_val = fit[[i, 0]];
-            stdev_pred_val = stdev[i];
-        }
+        // if i < prediction.x.len() {
+        //     x_pred_val = prediction.x[i];
+        //     y_pred_val = prediction.mean[i];
+        //     upper_val = prediction.upper[i];
+        //     lower_val = prediction.lower[i];
+        // }
 
         writeln!(
             writer,
-            "{:.8e}\t{:.8e}\t{:.8e}\t{:.8e}\t{:.8e}",
+            "{}\t{:.8e}\t{:.8e}\t{:.8e}\t{:.8e}\t{:.8e}\t{:.8}\t{:.8e}\t{:.8}",
+            "Training",
             x_train[i],
-            data[[i, 0]],
-            x_pred_val,
-            y_pred_val,
-            stdev_pred_val,
+            y_train[i],
+            f64::NAN,f64::NAN,f64::NAN,f64::NAN,f64::NAN,f64::NAN
+ 
+        )?;
+    }
+
+    for i in 0..prediction.x.len() {
+        writeln!(
+            writer,
+            "{}\t{:.8e}\t{:.8e}\t{:.8e}\t{:.8e}\t{:.8e}\t{:.8}\t{:.8e}\t{:.8}",
+            "Prediction",
+            prediction.x[i],
+            prediction.mean[i],
+            prediction.latent_std[i],
+            prediction.upper[i],
+            prediction.lower[i],
+            process.length_scale(),
+            process.amplitude(),
+            process.noise_sigma(),
+ 
         )?;
     }
 

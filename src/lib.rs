@@ -15,5 +15,5 @@ pub use fitting::{
 pub use form_factors::{Cylinder, Sphere};
 pub use io::{write_fit_result, write_gp_result};
 pub use models::{InteractingParticleModel, PolySphere, SingleParticleModel};
-pub use numerics::{DEFAULT_INTEGRATION_STEPS, covar, integrate_1d, simpson};
+pub use numerics::{DEFAULT_INTEGRATION_STEPS, rbf_covariance, integrate_1d, simpson, RbfGaussianProcess,RbfGPResult};
 pub use structure_factors::Lorentzian;
